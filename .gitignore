@@ -1,0 +1,8 @@
+# exclude the data set folder
+newsdata/
+
+# exclude the executable
+main.exe
+
+# exclude the batch file
+run_all.bat
