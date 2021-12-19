@@ -1,4 +1,5 @@
-
+#ifndef __UTILS_H
+#define __UTILS_H
 
 bool invalid_char(char c) {
 	return !isprint( static_cast<unsigned char>( c ) );
@@ -28,23 +29,15 @@ std::vector<std::string> split(const std::string &text, char sep) {
 std::vector<std::string> sanitize_and_stem_list(std::vector<std::string> input) {
 	std::vector<std::string> output;
 	std::string word;
-	std::string chars = "\n{}[]()!@#$% ^&*-—_=+/?.>,<;:`\"1234567890";
+	//std::string chars = "\n{}[]()!@#$% ^&*-—_=+/?.>,<;:`\"1234567890";
 
 	for (int i = 0; i < input.size(); i++) {
 		word = input[i];
-		
-		//word.erase(std::remove(word.begin(), word.end(), '\n'), word.end());
-    	/*for (char c: word) { // Remove chars that are not alphabet
-			if (c > 123 || c < 96)
-				my_remove(word, c);
-			//if (c > 123 || c < 96 || !(isprint(c)))
-        	//	word.erase(std::remove(word.begin(), word.end(), c), word.end());
-		}*/
 
 		size_t j = 0;
 		size_t len = word.length();
 		while(j < len){
-			if (!std::isalpha(word[j]) || word[j] == '\n'){
+			if (!std::isalpha(word[j]) || word[j] == '\n' || word[j] == '\t'){
 				word.erase(j,1);
 				len--;
 			}else
@@ -67,3 +60,5 @@ std::vector<std::string> sanitize_and_stem_list(std::vector<std::string> input) 
 
 	return output;
 }
+
+#endif

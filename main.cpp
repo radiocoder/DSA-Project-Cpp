@@ -11,6 +11,9 @@
 #include "lib/english_stem.hpp"
 #include "utils.h"
 
+using json = nlohmann::json;
+
+
 
 int main() {
 	int num = 0;
@@ -20,14 +23,7 @@ int main() {
 	std::unordered_map<std::string, int> doc_index;
 	std::unordered_map<int, std::vector<int>> forward_index;
 
-	std::ofstream lex_file;
-  	lex_file.open("lexicon.txt");
-	std::ofstream doc_index_file;
-	doc_index_file.open("doc_index.txt");
 	int doc_id = 0;
-	std::ofstream forward_index_file;
-	forward_index_file.open("forward_index.txt");
-	
 	
 	std::vector<std::string> words;
 	std::vector<int> word_id_list;
@@ -99,31 +95,43 @@ int main() {
 
 	std::cout << "Writing lexicon, doc_index, forward_index to files...." << "\n";
 
+    nlohmann::json lex_writer;
+    std::ofstream lex_file("lexicon.json");
+    
 	for (auto it : lexicon) 
-    	lex_file << it.first << ", " << it.second << "\n";
+        lex_writer[it.first] = it.second;
+    	
+    lex_file << lex_writer.dump(4) << std::endl;
+    lex_file.close();
+
+    nlohmann::json doc_index_writer;
+    std::ofstream doc_index_file("doc_index.json");
 
 	for (auto it : doc_index)
-		doc_index_file << "\"" << it.first << "\", " << it.second << "\n";
+		doc_index_writer[it.first] = it.second;
+    
+    doc_index_file << doc_index_writer.dump(4) << std::endl;
+    doc_index_file.close();
+    
 
+    json for_index_writer;
+    std::ofstream for_index_file("forward_index.json");
 	
 	for (auto it : forward_index) {
-		forward_index_file << it.first << ","; // << " " << it.second << "\n";
+        std::vector<int> new_empty_list;
 		for (int i = 0; i < it.second.size(); i++) {
-			forward_index_file << " " << it.second[i];
+			new_empty_list.push_back(it.second[i]);
 		}
-		forward_index_file << "\n";
-		//for (auto it2 : it.second)
+        for_index_writer[std::to_string(it.first)] = it.second;
 	}
 
-  	lex_file.close();
-	doc_index_file.close();
-	forward_index_file.close();
+    for_index_file << for_index_writer.dump(-1) << std::endl;
+    for_index_file.close();
+
 
 	// Building inverted index
 	std::cout << "Building inverted index..." << "\n";
 
-	std::ofstream inv_index_file;
-  	inv_index_file.open("inverted_index.txt");
 
 	std::unordered_map<int, std::vector<int>> inverted_index;
 
@@ -142,16 +150,22 @@ int main() {
 	std::cout << "Writing inverted index to a file..." << "\n";
 
 
+    json inv_index_writer;
+    std::ofstream inv_index_file("inverted_index.json");
+
 	for (auto it : inverted_index) {
-		inv_index_file << it.first << ","; // << " " << it.second << "\n";
+		std::vector<int> new_empty_list; // << " " << it.second << "\n";
 		for (int i = 0; i < it.second.size(); i++) {
-			inv_index_file << " " << it.second[i];
+			new_empty_list.push_back(it.second[i]);
 		}
-		inv_index_file << "\n";
+		inv_index_writer[std::to_string(it.first)] = it.second;
 		//for (auto it2 : it.second)
 	}
 
-	inv_index_file.close();
+    inv_index_file << inv_index_writer.dump(-1) << std::endl;
+    inv_index_file.close();
+
+	//inv_index_file.close();
 
 	return 0;
 
