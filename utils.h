@@ -25,6 +25,46 @@ std::vector<std::string> split(const std::string &text, char sep) {
     return tokens;
 }
 
+void remove_stopwords(std::vector<std::string>& words) {
+	words.erase(std::remove(words.begin(), words.end(), "a"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "of"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "the"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "an"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "to"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "on"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "does"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "with"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "other"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "their"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "when"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "both"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "these"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "here"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "this"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "that"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "who"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "have"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "has"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "such"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "which"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "or"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "most"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "over"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "if"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "was"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "were"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "but"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "will"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "would"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "should"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "shall"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "into"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "accord"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "at"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "away"), words.end());
+	words.erase(std::remove(words.begin(), words.end(), "as"), words.end());
+}
+
 
 std::vector<std::string> sanitize_and_stem_list(std::vector<std::string> input) {
 	std::vector<std::string> output;
