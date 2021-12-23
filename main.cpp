@@ -15,7 +15,6 @@
 using json = nlohmann::json;
 
 
-
 int main() {
 	
 	std::unordered_map<std::string, int> lexicon;
@@ -39,6 +38,7 @@ int main() {
 	files_names_file.close();
 
 	std::cout << "Building lexicon, doc_index, forward_index...." << "\n";
+
 	for (int a = 0; a < all_files_names.size(); a++) {
 		std::ifstream ifs(all_files_names[a]);
 		nlohmann::json jf = nlohmann::json::parse(ifs);
@@ -69,7 +69,7 @@ int main() {
 				if(lexicon.find(words[j]) == lexicon.end()) { // if not in lexicon
 					lexicon[words[j]] = num++;
 				}
-			}
+			} // lexicon
 
 			std::unordered_map<int, std::vector<short int>> hit_list;
 			std::vector<short int> temp_list;
@@ -77,15 +77,19 @@ int main() {
 				temp_list.clear();
 				if (hit_list.find(lexicon[words[j]]) == hit_list.end()) {
 					std::string title = jf[i]["title"];
-					if (title.find(words[j]) != std::string::npos) {
+					std::string url = jf[i]["url"];
+					if ((title.find(words[j]) != std::string::npos) || (url.find(words[j]) != std::string::npos)) {
     					temp_list.push_back(-1); // fancy
-					} /*else {
-						temp_list.push_back(-2);
-					}*/
-					temp_list.push_back(j);
+					} 
+					temp_list.push_back(1);
 					hit_list[lexicon[words[j]]] = temp_list;
 				} else {
-					hit_list[lexicon[words[j]]].push_back(j);
+
+					if (hit_list[lexicon[words[j]]][0] == -1) {
+						hit_list[lexicon[words[j]]][1]++;
+					} else {
+						hit_list[lexicon[words[j]]][0]++;
+					}
 				}
 			}
 

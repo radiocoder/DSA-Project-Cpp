@@ -42,3 +42,17 @@ newsdata/ballinaadvocate.json
 newsdata/bangkokpost.json
 newsdata/bbc.json
 newsdata/bbcuk.json
+newsdata/bearingarms.json
+newsdata/beat.json
+newsdata/beholdisrael.json
+newsdata/bigleaguepolitics.json
+newsdata/bigrigs.json
+newsdata/bipartisanreport.json
+newsdata/birminghammail.json
+newsdata/bizstandardnews.json
+newsdata/bnnbloomberg.json
+newsdata/boisestatepublicradio.json
+newsdata/bonginoreport.json
+newsdata/breaking911.json
+newsdata/breitbart.json
+newsdata/brightside.json
