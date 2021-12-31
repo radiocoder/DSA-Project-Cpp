@@ -2,7 +2,10 @@
 newsdata/
 
 # exclude the executable
-main.exe
+a.exe
 
-# exclude the batch file
-run_all.bat
+# exclude lexicon, doc_index, forward_index, inverted_index
+lexicon.json
+doc_index.json
+forward_index.json
+inverted_index.json
