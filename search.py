@@ -61,8 +61,6 @@ def search_event():
                     
 
             rank = sorted(rank.items(), key=lambda x: x[1], reverse=True) # return list of tuples
-            #print(rank)
-            #button_count = 1
 
             html_string = ''
             for doc_id, rank_n in rank:
@@ -89,13 +87,21 @@ def search_inverted(all_doc_ids, query_word_ids, last):
 
 
 def open_file_dialog():
+    # select file with File Chooser
     filename = tk.filedialog.askopenfilename()
-    print(filename)
-    print(f'"{filename}"')
+    # run a subprocess to update the forward and inverted index
     try:
-        subprocess.call(['copy', f'"{filename}"', 'newsdata'], shell=True)
+        subprocess.call(['python', 'update_forward_and_inverted_index.py', filename], shell=True)
     except FileNotFoundError:
         print('File not found')
+
+    # load them again after new insertions
+    global inverted_index
+    inverted_index = json.loads(Path("inverted_index.json").read_text())
+    global lexicon
+    lexicon = json.loads(Path("lexicon.json").read_text())
+    global doc_index
+    doc_index = json.loads(Path("doc_index.json").read_text())
     
 
 
@@ -129,9 +135,8 @@ inputtxt.configure(font=('Arial', 16))
 searchButton = tk.Button(frame, text='Search', command=search_event)
 searchButton.pack()
 
+# import new file button
 importFileButton = tk.Button(frame, text='Insert File', command=open_file_dialog)
 importFileButton.place(x=20, y=80)
-#link = tk.Label(frame, text='')
-#link.pack()
 
 frame.mainloop()

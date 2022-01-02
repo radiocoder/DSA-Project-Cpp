@@ -35,6 +35,10 @@ print("Updating forward index...")
 articles = json.loads(Path(filepath).read_text())
     # for every article in one file
 for article in articles:
+    if article['url'] in remove_duplicate_articles:
+        continue
+
+
     remove_duplicate_articles[article['url']] = new_num
     new_num += 1
                 
@@ -113,3 +117,4 @@ print("Writing the inverted index to file...")
 # write the json object to file
 inv_data = json.dumps(inverted_index)
 Path('inverted_index.json').write_text(inv_data)
+print("Updation Completed.")
