@@ -63,7 +63,11 @@ def search_event():
             rank = sorted(rank.items(), key=lambda x: x[1], reverse=True) # return list of tuples
 
             html_string = ''
+            total = 0
             for doc_id, rank_n in rank:
+                total += 1
+                if total == 200:
+                    break
                 title = doc_index[doc_id][0] # get the document title from document index
                 url = doc_index[doc_id][1] # get the document url from the document index
                 # now we first display the url and then the title
